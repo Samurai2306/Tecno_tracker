@@ -1,0 +1,70 @@
+.technology-detail {
+  width: 100%;
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.technology-detail__back {
+  margin-bottom: 24px;
+  padding: 14px 24px;
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  color: rgba(233, 213, 255, 0.8);
+}
+
+.technology-detail__back:hover {
+  background: rgba(226, 197, 252, 0.1);
+  border-color: rgba(226, 197, 252, 0.4);
+  color: #faf7ff;
+  transform: translateX(-4px);
+}
+
+.technology-detail__card {
+  width: 100%;
+}
+
+.technology-detail__not-found {
+  text-align: center;
+  padding: 48px;
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 20px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+}
+
+.technology-detail__not-found h2 {
+  font-size: 1.75rem;
+  color: rgba(233, 213, 255, 0.8);
+  margin-bottom: 24px;
+  font-weight: 600;
+}
+
+.technology-detail__not-found button {
+  padding: 14px 28px;
+  background: linear-gradient(135deg, rgba(226, 197, 252, 0.3) 0%, rgba(212, 181, 245, 0.3) 100%);
+  color: #faf7ff;
+  border: 1px solid rgba(226, 197, 252, 0.5);
+  border-radius: 12px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+
+.technology-detail__not-found button:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 4px 12px rgba(226, 197, 252, 0.2);
+  background: linear-gradient(135deg, rgba(226, 197, 252, 0.4) 0%, rgba(212, 181, 245, 0.4) 100%);
+}
+

@@ -1,0 +1,117 @@
+.add-technology {
+  width: 100%;
+  max-width: 700px;
+  margin: 0 auto;
+}
+
+.add-technology__title {
+  font-size: 2.5rem;
+  font-weight: 700;
+  background: linear-gradient(135deg, #faf7ff 0%, #f5ebff 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin-bottom: 32px;
+  text-align: center;
+}
+
+.add-technology__form {
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 20px;
+  padding: 32px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+}
+
+.add-technology__field {
+  margin-bottom: 24px;
+}
+
+.add-technology__label {
+  display: block;
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: rgba(233, 213, 255, 0.9);
+  margin-bottom: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.add-technology__input,
+.add-technology__textarea,
+.add-technology__select {
+  width: 100%;
+  padding: 14px 16px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  font-size: 1rem;
+  font-family: inherit;
+  transition: all 0.3s ease;
+  background: rgba(255, 255, 255, 0.03);
+  color: rgba(233, 213, 255, 0.9);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+
+.add-technology__input::placeholder,
+.add-technology__textarea::placeholder {
+  color: rgba(233, 213, 255, 0.4);
+}
+
+.add-technology__input:focus,
+.add-technology__textarea:focus,
+.add-technology__select:focus {
+  outline: none;
+  border-color: rgba(226, 197, 252, 0.6);
+  background: rgba(255, 255, 255, 0.05);
+  box-shadow: 0 0 0 3px rgba(226, 197, 252, 0.2);
+}
+
+.add-technology__textarea {
+  resize: vertical;
+}
+
+.add-technology__actions {
+  display: flex;
+  gap: 12px;
+  justify-content: flex-end;
+  margin-top: 32px;
+}
+
+.add-technology__button {
+  padding: 14px 28px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+
+.add-technology__button--cancel {
+  background: rgba(255, 255, 255, 0.05);
+  color: rgba(233, 213, 255, 0.8);
+}
+
+.add-technology__button--cancel:hover {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: rgba(255, 255, 255, 0.2);
+  transform: translateY(-2px);
+}
+
+.add-technology__button--submit {
+  background: linear-gradient(135deg, rgba(226, 197, 252, 0.3) 0%, rgba(212, 181, 245, 0.3) 100%);
+  color: #faf7ff;
+  border-color: rgba(226, 197, 252, 0.5);
+}
+
+.add-technology__button--submit:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 4px 12px rgba(226, 197, 252, 0.2);
+  background: linear-gradient(135deg, rgba(226, 197, 252, 0.4) 0%, rgba(212, 181, 245, 0.4) 100%);
+}
+

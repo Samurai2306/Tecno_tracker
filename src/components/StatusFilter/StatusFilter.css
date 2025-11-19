@@ -1,0 +1,71 @@
+.status-filter {
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 20px;
+  padding: 24px;
+  margin-bottom: 24px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+}
+
+.status-filter__title {
+  font-size: 1.25rem;
+  font-weight: 600;
+  background: linear-gradient(135deg, #f5ebff 0%, #e8d1fc 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin-bottom: 16px;
+}
+
+.status-filter__buttons {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.status-filter__button {
+  padding: 12px 20px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  font-size: 0.95rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  background: rgba(255, 255, 255, 0.05);
+  color: rgba(233, 213, 255, 0.8);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+
+.status-filter__button:hover {
+  border-color: rgba(226, 197, 252, 0.5);
+  color: #f5ebff;
+  transform: translateY(-2px);
+  background: rgba(226, 197, 252, 0.1);
+  box-shadow: 0 2px 8px rgba(226, 197, 252, 0.15);
+}
+
+.status-filter__button--active {
+  background: linear-gradient(135deg, rgba(226, 197, 252, 0.3) 0%, rgba(212, 181, 245, 0.3) 100%);
+  color: #faf7ff;
+  border-color: rgba(226, 197, 252, 0.8);
+  box-shadow: 0 2px 10px rgba(226, 197, 252, 0.2);
+}
+
+.status-filter__button--active:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 3px 12px rgba(226, 197, 252, 0.2);
+}
+
+@media (max-width: 768px) {
+  .status-filter__buttons {
+    flex-direction: column;
+  }
+  
+  .status-filter__button {
+    width: 100%;
+  }
+}
+

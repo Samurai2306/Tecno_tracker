@@ -1,0 +1,74 @@
+.app {
+  min-height: 100vh;
+  padding: 20px;
+  max-width: 1400px;
+  margin: 0 auto;
+  position: relative;
+}
+
+.app__header {
+  text-align: center;
+  margin-bottom: 40px;
+  position: relative;
+  width: 100%;
+}
+
+.app__title {
+  font-size: 3.5rem;
+  font-weight: 800;
+  background: linear-gradient(135deg, #faf7ff 0%, #f5ebff 30%, #e8d1fc 60%, #e2c5fc 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin: 0;
+  text-shadow: 0 0 20px rgba(226, 197, 252, 0.2);
+  position: relative;
+  z-index: 1;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  animation: titleGlow 5s ease-in-out infinite;
+}
+
+@keyframes titleGlow {
+  0%, 100% {
+    filter: drop-shadow(0 0 10px rgba(226, 197, 252, 0.15));
+  }
+  50% {
+    filter: drop-shadow(0 0 15px rgba(232, 209, 252, 0.25));
+  }
+}
+
+.app__title::after {
+  content: '';
+  position: absolute;
+  bottom: -12px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 150px;
+  height: 4px;
+  background: linear-gradient(90deg, transparent, #e8d1fc, #e2c5fc, #e8d1fc, transparent);
+  border-radius: 2px;
+  box-shadow: 0 0 8px rgba(226, 197, 252, 0.3);
+}
+
+.app__main {
+  width: 100%;
+  position: relative;
+}
+
+.app__technologies {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 24px;
+}
+
+@media (max-width: 768px) {
+  .app__technologies {
+    grid-template-columns: 1fr;
+  }
+  
+  .app__title {
+    font-size: 2rem;
+  }
+}
+
