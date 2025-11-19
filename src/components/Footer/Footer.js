@@ -48,7 +48,7 @@ const Footer = () => {
               className="footer__contact-link"
             >
               <img 
-                src="/assets/icons/icons8-tg-1.svg" 
+                src={`${process.env.PUBLIC_URL}/assets/icons/icons8-tg-1.svg`}
                 alt="Telegram" 
                 className="footer__contact-icon"
               />
@@ -61,7 +61,7 @@ const Footer = () => {
               className="footer__contact-link"
             >
               <img 
-                src="/assets/icons/icons8-github-1.svg" 
+                src={`${process.env.PUBLIC_URL}/assets/icons/icons8-github-1.svg`}
                 alt="GitHub" 
                 className="footer__contact-icon"
               />
@@ -72,7 +72,7 @@ const Footer = () => {
               className="footer__contact-link"
             >
               <img 
-                src="/assets/icons/icons8-gmail-1.svg" 
+                src={`${process.env.PUBLIC_URL}/assets/icons/icons8-gmail-1.svg`}
                 alt="Gmail" 
                 className="footer__contact-icon"
               />
@@ -85,7 +85,7 @@ const Footer = () => {
               className="footer__contact-link"
             >
               <img 
-                src="/assets/icons/icons8-vk-2.svg" 
+                src={`${process.env.PUBLIC_URL}/assets/icons/icons8-vk-2.svg`}
                 alt="VK" 
                 className="footer__contact-icon"
               />
