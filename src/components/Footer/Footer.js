@@ -91,6 +91,15 @@ const Footer = () => {
               />
               <span>VK glebnigger</span>
             </a>
+            <a 
+              href="https://samurai2306.github.io/Weather_app" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              className="footer__contact-link"
+            >
+              <span style={{ fontSize: '24px' }}>🌤️</span>
+              <span>Прогноз погоды</span>
+            </a>
           </div>
         </div>
       </div>
