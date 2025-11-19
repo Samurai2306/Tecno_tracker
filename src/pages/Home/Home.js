@@ -8,7 +8,7 @@ import { useTechnologies } from '../../hooks/useTechnologies';
 import './Home.css';
 
 const Home = ({ userId }) => {
-  const { technologies, updateStatus, calculateProgress } = useTechnologies(userId);
+  const { technologies, updateStatus } = useTechnologies(userId);
 
   const handleMarkAllCompleted = () => {
     technologies.forEach(tech => {

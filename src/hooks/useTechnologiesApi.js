@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 
 // Имитация API - мок-данные
 const MOCK_API_DELAY = 1000;
