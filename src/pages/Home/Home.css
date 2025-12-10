@@ -41,6 +41,13 @@
   margin-bottom: 20px;
 }
 
+.home__technologies-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 20px;
+  margin-bottom: 24px;
+}
+
 .home__tech-link {
   text-decoration: none;
   color: inherit;

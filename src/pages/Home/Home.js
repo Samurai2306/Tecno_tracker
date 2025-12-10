@@ -1,14 +1,16 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import { Link } from 'react-router-dom';
 import ProgressHeader from '../../components/ProgressHeader/ProgressHeader';
 import Statistics from '../../components/Statistics/Statistics';
 import QuickActions from '../../components/QuickActions/QuickActions';
 import RoadmapImporter from '../../components/RoadmapImporter/RoadmapImporter';
+import TechnologyCard from '../../components/TechnologyCard/TechnologyCard';
 import { useTechnologies } from '../../hooks/useTechnologies';
+import { getTimeUntilDeadline, getDeadlineUrgency } from '../../utils/deadlineUtils';
 import './Home.css';
 
 const Home = ({ userId }) => {
-  const { technologies, updateStatus } = useTechnologies(userId);
+  const { technologies, updateStatus, updateNotes } = useTechnologies(userId);
 
   const handleMarkAllCompleted = () => {
     technologies.forEach(tech => {
@@ -39,9 +41,36 @@ const Home = ({ userId }) => {
     alert('Данные экспортированы в консоль!');
   };
 
-  const recentTechnologies = technologies
-    .filter(t => t.status === 'in-progress')
-    .slice(0, 3);
+  // Технологии в процессе с приоритетом по дедлайнам
+  const recentTechnologies = useMemo(() => {
+    const inProgress = technologies.filter(t => t.status === 'in-progress');
+    
+    // Сортируем: сначала с дедлайнами (по срочности), затем без дедлайнов
+    return inProgress.sort((a, b) => {
+      const aDeadline = a.deadline ? getTimeUntilDeadline(a.deadline) : null;
+      const bDeadline = b.deadline ? getTimeUntilDeadline(b.deadline) : null;
+      
+      // Если у обеих есть дедлайны, сортируем по срочности
+      if (aDeadline && bDeadline) {
+        const aUrgency = getDeadlineUrgency(a.deadline);
+        const bUrgency = getDeadlineUrgency(b.deadline);
+        
+        const urgencyOrder = { 'overdue': 0, 'urgent': 1, 'soon': 2, 'normal': 3 };
+        if (urgencyOrder[aUrgency] !== urgencyOrder[bUrgency]) {
+          return urgencyOrder[aUrgency] - urgencyOrder[bUrgency];
+        }
+        
+        // Если срочность одинаковая, сортируем по времени до дедлайна
+        return (aDeadline.totalDays || Infinity) - (bDeadline.totalDays || Infinity);
+      }
+      
+      // Технологии с дедлайнами идут первыми
+      if (aDeadline && !bDeadline) return -1;
+      if (!aDeadline && bDeadline) return 1;
+      
+      return 0;
+    }).slice(0, 3);
+  }, [technologies]);
 
   return (
     <div className="home">
@@ -60,35 +89,16 @@ const Home = ({ userId }) => {
       {recentTechnologies.length > 0 && (
         <div className="home__section">
           <h3 className="home__section-title">Технологии в процессе изучения</h3>
-          <div className="home__technologies">
+          <div className="home__technologies-grid">
             {recentTechnologies.map(tech => (
-              <Link
+              <TechnologyCard
                 key={tech.id}
-                to={`/technologies/${tech.id}`}
-                className="home__tech-link"
-              >
-                <div className="home__tech-card">
-                  {tech.category && (
-                    <span style={{
-                      display: 'inline-block',
-                      padding: '4px 10px',
-                      background: 'rgba(168, 85, 247, 0.2)',
-                      border: '1px solid rgba(168, 85, 247, 0.3)',
-                      borderRadius: '8px',
-                      fontSize: '0.7rem',
-                      fontWeight: 600,
-                      color: '#c084fc',
-                      marginBottom: '8px',
-                      textTransform: 'uppercase',
-                      letterSpacing: '0.5px'
-                    }}>
-                      {tech.category}
-                    </span>
-                  )}
-                  <h4>{tech.title}</h4>
-                  <p>{tech.description}</p>
-                </div>
-              </Link>
+                technology={tech}
+                onStatusChange={updateStatus}
+                onNotesChange={updateNotes}
+                showNotes={false}
+                linkTo={`/technologies/${tech.id}`}
+              />
             ))}
           </div>
           <Link to="/technologies" className="home__view-all">

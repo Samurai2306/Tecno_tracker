@@ -1,9 +1,32 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import './TechnologyCard.css';
 import TechnologyNotes from '../TechnologyNotes/TechnologyNotes';
+import { formatTimeUntilDeadline, getDeadlineUrgency, getUrgencyColorClass } from '../../utils/deadlineUtils';
 
 const TechnologyCard = ({ technology, onStatusChange, onNotesChange, showNotes = false, linkTo }) => {
+  const [timeUntilDeadline, setTimeUntilDeadline] = useState(null);
+  const [deadlineUrgency, setDeadlineUrgency] = useState('normal');
+
+  // Обновляем время до дедлайна каждую минуту
+  useEffect(() => {
+    if (technology.deadline) {
+      const updateTime = () => {
+        const formatted = formatTimeUntilDeadline(technology.deadline);
+        const urgency = getDeadlineUrgency(technology.deadline);
+        setTimeUntilDeadline(formatted);
+        setDeadlineUrgency(urgency);
+      };
+
+      updateTime();
+      const interval = setInterval(updateTime, 60000); // Обновляем каждую минуту
+
+      return () => clearInterval(interval);
+    } else {
+      setTimeUntilDeadline(null);
+      setDeadlineUrgency('normal');
+    }
+  }, [technology.deadline]);
   const getStatusIcon = (status) => {
     switch (status) {
       case 'completed':
@@ -69,6 +92,18 @@ const TechnologyCard = ({ technology, onStatusChange, onNotesChange, showNotes =
         </span>
       </div>
       <p className="technology-card__description">{technology.description}</p>
+      
+      {technology.deadline && timeUntilDeadline && (
+        <div className={`technology-card__deadline ${getUrgencyColorClass(deadlineUrgency)}`}>
+          <span className="technology-card__deadline-icon">
+            {deadlineUrgency === 'overdue' ? '⚠️' : deadlineUrgency === 'urgent' ? '⏰' : '📅'}
+          </span>
+          <span className="technology-card__deadline-text">
+            {timeUntilDeadline}
+          </span>
+        </div>
+      )}
+
       {showNotes && (
         <TechnologyNotes
           technology={technology}
