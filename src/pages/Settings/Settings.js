@@ -24,61 +24,210 @@ const Settings = ({ userId, onLogout }) => {
     }
   }, [settings, userId]);
 
-  const handleExport = () => {
-    const data = JSON.stringify(technologies, null, 2);
-    setExportData(data);
-    navigator.clipboard.writeText(data).then(() => {
-      alert('Данные скопированы в буфер обмена!');
+  // Валидация структуры данных технологии
+  const validateTechnology = (tech) => {
+    if (!tech || typeof tech !== 'object') {
+      return { valid: false, error: 'Технология должна быть объектом' };
+    }
+    if (!tech.id || typeof tech.id !== 'number') {
+      return { valid: false, error: 'Технология должна иметь числовой id' };
+    }
+    if (!tech.title || typeof tech.title !== 'string' || tech.title.trim() === '') {
+      return { valid: false, error: 'Технология должна иметь непустое название' };
+    }
+    if (tech.status && !['not-started', 'in-progress', 'completed'].includes(tech.status)) {
+      return { valid: false, error: `Неверный статус: ${tech.status}` };
+    }
+    return { valid: true };
+  };
+
+  // Валидация массива технологий
+  const validateTechnologies = (data) => {
+    if (!Array.isArray(data)) {
+      return { valid: false, error: 'Данные должны быть массивом' };
+    }
+    if (data.length === 0) {
+      return { valid: false, error: 'Массив не может быть пустым' };
+    }
+    
+    const errors = [];
+    data.forEach((tech, index) => {
+      const validation = validateTechnology(tech);
+      if (!validation.valid) {
+        errors.push(`Элемент ${index + 1}: ${validation.error}`);
+      }
     });
+    
+    if (errors.length > 0) {
+      return { valid: false, error: errors.join('; ') };
+    }
+    
+    return { valid: true };
+  };
+
+  const handleExport = () => {
+    try {
+      // Проверяем данные перед экспортом
+      const validation = validateTechnologies(technologies);
+      if (!validation.valid) {
+        alert(`Ошибка валидации данных перед экспортом: ${validation.error}`);
+        return;
+      }
+
+      const data = JSON.stringify(technologies, null, 2);
+      
+      // Проверяем, что JSON валиден
+      try {
+        JSON.parse(data);
+      } catch (e) {
+        alert('Ошибка: невозможно создать валидный JSON файл');
+        return;
+      }
+
+      setExportData(data);
+      navigator.clipboard.writeText(data).then(() => {
+        alert('Данные успешно скопированы в буфер обмена!');
+      }).catch((err) => {
+        alert(`Ошибка при копировании в буфер обмена: ${err.message}`);
+      });
+    } catch (error) {
+      alert(`Ошибка при экспорте данных: ${error.message}`);
+    }
   };
 
   const handleExportFile = () => {
-    const data = JSON.stringify(technologies, null, 2);
-    const blob = new Blob([data], { type: 'application/json' });
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = `technology-tracker-${new Date().toISOString().split('T')[0]}.json`;
-    document.body.appendChild(a);
-    a.click();
-    document.body.removeChild(a);
-    URL.revokeObjectURL(url);
+    try {
+      // Проверяем данные перед экспортом
+      const validation = validateTechnologies(technologies);
+      if (!validation.valid) {
+        alert(`Ошибка валидации данных перед экспортом: ${validation.error}`);
+        return;
+      }
+
+      const data = JSON.stringify(technologies, null, 2);
+      
+      // Проверяем, что JSON валиден
+      try {
+        JSON.parse(data);
+      } catch (e) {
+        alert('Ошибка: невозможно создать валидный JSON файл');
+        return;
+      }
+
+      const blob = new Blob([data], { type: 'application/json;charset=utf-8' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `technology-tracker-${new Date().toISOString().split('T')[0]}.json`;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+      
+      alert('Файл успешно экспортирован!');
+    } catch (error) {
+      alert(`Ошибка при экспорте файла: ${error.message}`);
+    }
   };
 
   const handleImport = () => {
+    if (!exportData.trim()) {
+      alert('Поле для импорта пусто. Вставьте JSON данные.');
+      return;
+    }
+
     try {
-      const data = JSON.parse(exportData);
-      if (Array.isArray(data)) {
-        setTechnologies(data);
-        alert('Данные успешно импортированы!');
-        setExportData('');
-      } else {
-        alert('Неверный формат данных!');
+      // Парсим JSON
+      let data;
+      try {
+        data = JSON.parse(exportData);
+      } catch (parseError) {
+        alert(`Ошибка парсинга JSON: ${parseError.message}\n\nУбедитесь, что данные в формате валидного JSON.`);
+        return;
       }
-    } catch (e) {
-      alert('Ошибка при импорте данных: ' + e.message);
+
+      // Валидируем структуру
+      const validation = validateTechnologies(data);
+      if (!validation.valid) {
+        alert(`Ошибка валидации данных:\n${validation.error}\n\nПроверьте формат данных и попробуйте снова.`);
+        return;
+      }
+
+      // Подтверждение перед импортом
+      if (!window.confirm(`Вы уверены, что хотите импортировать ${data.length} технологий? Это заменит текущие данные.`)) {
+        return;
+      }
+
+      setTechnologies(data);
+      alert(`Данные успешно импортированы! Импортировано ${data.length} технологий.`);
+      setExportData('');
+    } catch (error) {
+      alert(`Ошибка при импорте данных: ${error.message}\n\nПроверьте формат данных и попробуйте снова.`);
     }
   };
 
   const handleImportFile = (e) => {
     const file = e.target.files[0];
-    if (file) {
-      const reader = new FileReader();
-      reader.onload = (event) => {
-        try {
-          const data = JSON.parse(event.target.result);
-          if (Array.isArray(data)) {
-            setTechnologies(data);
-            alert('Данные успешно импортированы из файла!');
-          } else {
-            alert('Неверный формат данных!');
-          }
-        } catch (error) {
-          alert('Ошибка при чтении файла: ' + error.message);
-        }
-      };
-      reader.readAsText(file);
+    if (!file) {
+      return;
     }
+
+    // Проверяем тип файла
+    if (!file.name.endsWith('.json') && file.type !== 'application/json') {
+      alert('Ошибка: выбранный файл не является JSON файлом. Пожалуйста, выберите файл с расширением .json');
+      e.target.value = ''; // Сбрасываем значение input
+      return;
+    }
+
+    // Проверяем размер файла (максимум 10MB)
+    if (file.size > 10 * 1024 * 1024) {
+      alert('Ошибка: файл слишком большой. Максимальный размер: 10MB');
+      e.target.value = '';
+      return;
+    }
+
+    const reader = new FileReader();
+    
+    reader.onerror = () => {
+      alert('Ошибка при чтении файла. Попробуйте выбрать другой файл.');
+      e.target.value = '';
+    };
+
+    reader.onload = (event) => {
+      try {
+        let data;
+        try {
+          data = JSON.parse(event.target.result);
+        } catch (parseError) {
+          alert(`Ошибка парсинга JSON файла: ${parseError.message}\n\nУбедитесь, что файл содержит валидный JSON.`);
+          e.target.value = '';
+          return;
+        }
+
+        // Валидируем структуру
+        const validation = validateTechnologies(data);
+        if (!validation.valid) {
+          alert(`Ошибка валидации данных в файле:\n${validation.error}\n\nПроверьте формат данных в файле и попробуйте снова.`);
+          e.target.value = '';
+          return;
+        }
+
+        // Подтверждение перед импортом
+        if (!window.confirm(`Вы уверены, что хотите импортировать ${data.length} технологий из файла "${file.name}"? Это заменит текущие данные.`)) {
+          e.target.value = '';
+          return;
+        }
+
+        setTechnologies(data);
+        alert(`Данные успешно импортированы из файла "${file.name}"! Импортировано ${data.length} технологий.`);
+        e.target.value = ''; // Сбрасываем значение input для возможности повторного выбора того же файла
+      } catch (error) {
+        alert(`Ошибка при обработке файла: ${error.message}\n\nПроверьте содержимое файла и попробуйте снова.`);
+        e.target.value = '';
+      }
+    };
+
+    reader.readAsText(file, 'UTF-8');
   };
 
   const handleClear = () => {

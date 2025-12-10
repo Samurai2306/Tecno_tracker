@@ -4,6 +4,7 @@ import TechnologyCard from '../../components/TechnologyCard/TechnologyCard';
 import StatusFilter from '../../components/StatusFilter/StatusFilter';
 import CategoryFilter from '../../components/CategoryFilter/CategoryFilter';
 import SearchBar from '../../components/SearchBar/SearchBar';
+import BulkStatusEditor from '../../components/BulkStatusEditor/BulkStatusEditor';
 import { useTechnologies } from '../../hooks/useTechnologies';
 import './TechnologyList.css';
 
@@ -12,6 +13,7 @@ const TechnologyList = ({ userId }) => {
   const [statusFilter, setStatusFilter] = useState('all');
   const [categoryFilter, setCategoryFilter] = useState('all');
   const [searchQuery, setSearchQuery] = useState('');
+  const [showBulkEditor, setShowBulkEditor] = useState(false);
 
   // Фильтрация по категории
   let filteredTechnologies = categoryFilter === 'all'
@@ -35,7 +37,16 @@ const TechnologyList = ({ userId }) => {
 
   return (
     <div className="technology-list">
-      <h2 className="technology-list__title">Список технологий</h2>
+      <div className="technology-list__header">
+        <h2 className="technology-list__title">Список технологий</h2>
+        <button
+          className="technology-list__bulk-edit-button"
+          onClick={() => setShowBulkEditor(true)}
+          aria-label="Открыть массовое редактирование статусов"
+        >
+          Массовое редактирование
+        </button>
+      </div>
       <SearchBar
         searchQuery={searchQuery}
         onSearchChange={setSearchQuery}
@@ -70,6 +81,13 @@ const TechnologyList = ({ userId }) => {
           </Link>
         </div>
       )}
+
+      <BulkStatusEditor
+        technologies={technologies}
+        onUpdateStatuses={updateStatus}
+        isOpen={showBulkEditor}
+        onClose={() => setShowBulkEditor(false)}
+      />
     </div>
   );
 };

@@ -68,3 +68,91 @@
   background: linear-gradient(135deg, rgba(226, 197, 252, 0.4) 0%, rgba(212, 181, 245, 0.4) 100%);
 }
 
+.technology-detail__deadline-section {
+  margin-top: 24px;
+  margin-bottom: 24px;
+}
+
+.technology-detail__deadline-info {
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 20px;
+  padding: 24px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+}
+
+.technology-detail__deadline-title {
+  font-size: 1.25rem;
+  font-weight: 700;
+  background: linear-gradient(135deg, #f5ebff 0%, #e8d1fc 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin: 0 0 16px 0;
+}
+
+.technology-detail__deadline-details {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.technology-detail__deadline-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: 8px;
+}
+
+.technology-detail__deadline-label {
+  font-size: 0.9rem;
+  color: rgba(233, 213, 255, 0.7);
+  font-weight: 500;
+}
+
+.technology-detail__deadline-value {
+  font-size: 0.95rem;
+  color: rgba(233, 213, 255, 0.9);
+  font-weight: 600;
+}
+
+.technology-detail__deadline-empty {
+  color: rgba(233, 213, 255, 0.6);
+  font-size: 0.9rem;
+  margin-bottom: 16px;
+  font-style: italic;
+}
+
+.technology-detail__deadline-button {
+  padding: 12px 24px;
+  background: linear-gradient(135deg, rgba(220, 200, 250, 0.3) 0%, rgba(212, 181, 245, 0.3) 100%);
+  border: 1px solid rgba(220, 200, 250, 0.5);
+  border-radius: 12px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  color: #faf7ff;
+  font-family: inherit;
+  width: 100%;
+}
+
+.technology-detail__deadline-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(220, 200, 250, 0.5);
+  background: linear-gradient(135deg, rgba(220, 200, 250, 0.4) 0%, rgba(212, 181, 245, 0.4) 100%);
+}
+
+.technology-detail__deadline-button:focus {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(226, 197, 252, 0.3);
+}
+

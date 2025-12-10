@@ -1,0 +1,156 @@
+.deadline-form {
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 20px;
+  padding: 32px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.deadline-form__header {
+  margin-bottom: 24px;
+}
+
+.deadline-form__title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  background: linear-gradient(135deg, #f5ebff 0%, #e8d1fc 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin: 0;
+}
+
+.deadline-form__field {
+  margin-bottom: 24px;
+}
+
+.deadline-form__label {
+  display: block;
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: rgba(233, 213, 255, 0.9);
+  margin-bottom: 8px;
+}
+
+.deadline-form__required {
+  color: rgba(239, 68, 68, 0.9);
+  margin-left: 4px;
+}
+
+.deadline-form__input {
+  width: 100%;
+  padding: 14px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  font-size: 0.95rem;
+  font-family: inherit;
+  transition: all 0.3s ease;
+  background: rgba(255, 255, 255, 0.03);
+  color: rgba(233, 213, 255, 0.9);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  box-sizing: border-box;
+}
+
+.deadline-form__input:focus {
+  outline: none;
+  border-color: rgba(226, 197, 252, 0.6);
+  background: rgba(255, 255, 255, 0.05);
+  box-shadow: 0 0 0 3px rgba(226, 197, 252, 0.2);
+}
+
+.deadline-form__input--error {
+  border-color: rgba(239, 68, 68, 0.6);
+  background: rgba(239, 68, 68, 0.05);
+}
+
+.deadline-form__input--error:focus {
+  border-color: rgba(239, 68, 68, 0.8);
+  box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.2);
+}
+
+.deadline-form__error {
+  margin-top: 8px;
+  font-size: 0.85rem;
+  color: rgba(239, 68, 68, 0.9);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.deadline-form__error::before {
+  content: '⚠';
+  font-size: 1rem;
+}
+
+.deadline-form__actions {
+  display: flex;
+  gap: 12px;
+  justify-content: flex-end;
+  margin-top: 32px;
+  padding-top: 24px;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.deadline-form__button {
+  padding: 12px 24px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  color: #faf7ff;
+  font-family: inherit;
+}
+
+.deadline-form__button:focus {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(226, 197, 252, 0.3);
+}
+
+.deadline-form__button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.deadline-form__button--cancel {
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.deadline-form__button--cancel:hover:not(:disabled) {
+  background: rgba(255, 255, 255, 0.1);
+  transform: translateY(-2px);
+}
+
+.deadline-form__button--submit {
+  background: linear-gradient(135deg, rgba(220, 200, 250, 0.3) 0%, rgba(212, 181, 245, 0.3) 100%);
+  border-color: rgba(220, 200, 250, 0.5);
+}
+
+.deadline-form__button--submit:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(220, 200, 250, 0.5);
+  background: linear-gradient(135deg, rgba(220, 200, 250, 0.4) 0%, rgba(212, 181, 245, 0.4) 100%);
+}
+
+@media (max-width: 768px) {
+  .deadline-form {
+    padding: 24px;
+  }
+
+  .deadline-form__actions {
+    flex-direction: column;
+  }
+
+  .deadline-form__button {
+    width: 100%;
+  }
+}
+

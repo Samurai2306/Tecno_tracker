@@ -190,6 +190,14 @@ export const useTechnologies = (userId) => {
     );
   };
 
+  const updateDeadline = (id, deadlineData) => {
+    setTechnologies(prevTechnologies =>
+      prevTechnologies.map(tech =>
+        tech.id === id ? { ...tech, ...deadlineData } : tech
+      )
+    );
+  };
+
   const calculateProgress = () => {
     const total = technologies.length;
     const completed = technologies.filter(t => t.status === 'completed').length;
@@ -215,6 +223,7 @@ export const useTechnologies = (userId) => {
     setTechnologies,
     updateStatus,
     updateNotes,
+    updateDeadline,
     calculateProgress,
     addTechnology,
     removeTechnology
